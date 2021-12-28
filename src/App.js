@@ -1,28 +1,18 @@
 import React from 'react'
 import './App.css'
-import { Provider } from 'react-redux'
-import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import { useState } from 'react'
+import { useSelector } from 'react-redux' 
 
-import pomosettings from './reducers/pomosettings'
 import Timer from './pages/Timer'
 import Settings from './pages/Settings'
 
-const reducer = combineReducers({
-  pomosettings: pomosettings.reducer
-})
-
-const store = configureStore({ reducer })
-
+//the Provider is applied in index.js, so that I can use showSettings in App.js
 const App = () => {
-  const [showSettings, setShowSettings] = useState(false)
+  const showSettings = useSelector((state) => state.pomosettings.showSettings)
 
   return (
-    <Provider store={store}>
-      <main>
-        {showSettings? <Settings /> : <Timer />}  
-      </main>
-    </Provider>  
+    <main>
+      {showSettings? <Settings /> : <Timer />}  
+    </main>
   )
 }
 
