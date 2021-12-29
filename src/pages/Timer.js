@@ -37,9 +37,6 @@ const Timer = () => {
     setSecondsLeft(secondsLeftRef.current)
   }
 
-
-
-
   useEffect(() => {
     initTimer()
   
@@ -87,11 +84,13 @@ const Timer = () => {
         text={minutes + ':' + seconds} 
         styles={buildStyles({
           textColor: '#fff',
-          pathColor: red,
+          pathColor: mode === 'work' ? red : green,
           trailColor: 'rgba(255,255,255, 0.8)'
         })} />
       <div style={{marginTop:'20px'}}>
-        {isPaused? <PlayButton /> : <PauseButton />}
+        {isPaused
+          ? <PlayButton onClick={() => { setIsPaused(false); isPausedRef.current = false}}/> 
+          : <PauseButton onClick={() => { setIsPaused(true); isPausedRef.current = true}}/>}
       </div>
       <div style={{marginTop:'20px'}}>
         <SettingsButton onClick={() => dispatch(pomosettings.actions.setShowSettings())}/>
