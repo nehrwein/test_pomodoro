@@ -18,27 +18,27 @@ const Timer = () => {
 
   //Timer is paused to start with
   const [isPaused, setIsPaused] = useState(true)
-  // mode can be work/break/null
-  const [mode, setMode] = useState('work') 
+  // mode can be work or break
+  const [mode, setMode] = useState('work')
+  //The timer uses the total amount of seconds (workMinutes * 60 || breakMinutes) 
   const [secondsLeft, setSecondsLeft] = useState(0)
 
-  //references are needed to work with setInterval
+  //References are needed to work with setInterval
   const secondsLeftRef = useRef(secondsLeft)
   const isPausedRef = useRef(isPaused)
   const modeRef = useRef(mode)
 
-  const tick = () => {
-    secondsLeftRef.current--;
-    setSecondsLeft(secondsLeftRef.current);
-  }
 
-  const initTimer = () => {
-    secondsLeftRef.current = settingsInfo.workMinutes * 60
-    setSecondsLeft(secondsLeftRef.current)
+  //every time this function is called, a second gets substracted
+  const tick = () => {
+    setSecondsLeft(secondsLeftRef.current--);
   }
 
   useEffect(() => {
-    initTimer()
+    //setting the initial timer to the provided workMinutes
+    secondsLeftRef.current = settingsInfo.workMinutes * 60
+    setSecondsLeft(secondsLeftRef.current)
+
   
     const switchMode = () => {
       const nextMode = modeRef.current === 'work' ? 'break' : 'work'
@@ -69,6 +69,7 @@ const Timer = () => {
   const totalSeconds = mode === 'work' 
     ? settingsInfo.workMinutes * 60 
     : settingsInfo.breakMinutes * 60
+
   const percentage = Math.round(secondsLeft / totalSeconds * 100) 
 
   const minutes = Math.floor(secondsLeft / 60)
