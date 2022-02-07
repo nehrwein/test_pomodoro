@@ -28,7 +28,7 @@ const Timer = () => {
   const isPausedRef = useRef(isPaused)
   const modeRef = useRef(mode)
 
-
+  //just a test comment
   //every time this function is called, a second gets substracted
   const tick = () => {
     setSecondsLeft(secondsLeftRef.current--);
